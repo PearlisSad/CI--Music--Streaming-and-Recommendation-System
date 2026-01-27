@@ -1,0 +1,15 @@
+#Data Manipulation
+numpy
+pandas
+
+#Data Visualisation
+matplotlib
+seaborn
+plotly
+
+#Jupyter Notebook
+notebook
+ipykernel
+jupyter-client
+jupyter-core
+ipywidgets 
