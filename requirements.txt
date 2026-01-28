@@ -7,6 +7,12 @@ matplotlib
 seaborn
 plotly
 
+#Dashboard
+streamlit
+
+#Machine Learning
+scikit-learn
+
 #Jupyter Notebook
 notebook
 ipykernel
