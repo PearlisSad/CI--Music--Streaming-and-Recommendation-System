@@ -60,13 +60,18 @@ Open your terminal or a Jupyter cell and run:
 pip install -r requirements.txt
 ```
 
-### Streamlit Dashboard
+### Streamlit Dashboard (If applicable)
 
 Run the streamlit ```file_name.py``` app and it will open automatically in your browser, displaying the plots.
 
 ```bash
 streamlit run file_name.py
 ```
+
+### Power BI/Tableau Dasboard
+
+An interactive Power BI/Tableau Dasboard can be accessed [__here.__](paste_the_link)
+
 
 ### Run the Notebook
 
