@@ -145,28 +145,40 @@ def build_get_embeddings(multi_genre_df2, X_numeric_sound_profile_input, song_id
 def recommend_by_song(df, song_id, k=5, id2index=None, index2id=None, all_embeddings=None):
     """
     Return top-k most similar songs to song_id based on cosine similarity over normalized embeddings.
-    Returns list of dicts: [{'track_id': ..., 'track_name': ..., 'artists': ..., 'score': ...}, ...]
+    Returns list of dicts: [{'track_id': ..., 'track_name': ..., 'artists': ..., 'popularity': ..., 
+    'danceability': ..., 'energy': ..., 'score': ...}, ...]
     """
     if song_id not in id2index:
         raise KeyError(f"song_id {song_id} not found")
+    
     q_idx = id2index[song_id]
     q_emb = all_embeddings[q_idx].reshape(1, -1)  # (1, D)
-    # cosine similarity with normalized vectors = dot product
+    
+    # Cosine similarity with normalized vectors = dot product
     sims = all_embeddings.dot(q_emb.T).ravel()  # shape (n_songs,)
-    # exclude the query itself
+    
+    # Exclude the query itself
     sims[q_idx] = -1.0
-    # get top-k indices
+    
+    # Get top-k indices
     topk_idx = np.argpartition(-sims, range(k))[:k]
-    topk_idx = topk_idx[np.argsort(-sims[topk_idx])]  # sort topk by score desc
+    topk_idx = topk_idx[np.argsort(-sims[topk_idx])]  # sort top-k by score desc
 
     results = []
     for idx in topk_idx:
         sid = index2id[idx]
-        genre_df = df
-        row = genre_df.loc[genre_df['track_id'] == sid].iloc[0]
+        row = df.loc[df['track_id'] == sid].iloc[0]  # Get the corresponding row
         results.append({
+            'track_id': sid,
             'track_name': row.get('track_name', None),
             'artists': row.get('artists', None),
-            'model score': f"{float(sims[idx]) * 100:.0f}%"  # Format score as percentage
+            'popularity': row.get('popularity', None),  # Include popularity
+            'danceability': row.get('danceability', None),  # Include other features
+            'energy': row.get('energy', None),
+            'acousticness': row.get('acousticness', None),
+            'instrumentalness': row.get('instrumentalness', None),
+            'liveness': row.get('liveness', None),
+            'valence': row.get('valence', None),
+            'score': f"{float(sims[idx]) * 100:.0f}%"  # Format score as percentage
         })
     return results

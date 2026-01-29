@@ -17,6 +17,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics.pairwise import cosine_similarity
 from neural_network_functions import process_genres, prepare_numeric_features, build_get_embeddings, recommend_by_song
 
+st.title("Music is the Answer to your problems!")
+
 # Load logo
 image_path = "../assets/spoofify_logo.png"  # Ensure this path points to your logo image
 st.sidebar.image(image_path, width=200)  # Display the logo in the sidebar
@@ -30,7 +32,7 @@ data = pd.read_csv("../datasets/sam_df_clean.csv")
 genre_df = process_genres(data)
 
 # Create the dropdown in the sidebar
-st.sidebar.title("Music is The Answer to Your Problems")
+st.sidebar.title("Find the playlist for your soul")
 # Create a list of song names combined with their artists, sorted alphabetically
 song_names_with_artists = genre_df.apply(lambda row: f"{row['track_name']} | {row['artists']}", axis=1).tolist()
 song_names_with_artists.sort()  # Sort the list alphabetically
@@ -60,6 +62,7 @@ song_id = genre_df.loc[genre_df['track_name'] == track_name, 'track_id'].values[
 recommendations = recommend_by_song(genre_df,song_id, k=5, id2index=id2index, index2id=index2id, all_embeddings=all_embeddings)
 recs_df = pd.DataFrame(recommendations)
 recs_df.index = range(1, len(recs_df) + 1)  # Adjusting the index to start at 1
+recs_display_df = recs_df[['track_name', 'artists', 'score']]
 
 with col1:
     # Assuming you have genre_df defined with the necessary columns including song_id
@@ -98,7 +101,7 @@ with col1:
                     range=[0, 1]  # This ensures the range of the radar chart
                 )
             ),
-            title=f"Song profile of {selected_track['track_name'].values[0]}",
+            title=f"Song profile: {selected_track['track_name'].values[0]}",
             template="plotly_dark"
         )
 
@@ -107,7 +110,63 @@ with col1:
     else:
         st.write("No data found for the selected song.")
 
+# Second Radar Chart for Recommendations
+with col2:
+    if not recs_df.empty:
+        # Create the radar chart
+        fig = go.Figure()
+
+        # List of distinct colors to use for layering
+        colors = ['rgba(0, 255, 0, 0.6)',  # Neon Green
+                  'rgba(255, 0, 255, 0.6)',  # Neon Purple
+                  'rgba(255, 165, 0, 0.6)',  # Neon Orange
+                  'rgba(255, 0, 0, 0.6)',    # Neon Red
+                  'rgba(0, 0, 255, 0.6)',    # Neon Blue
+                  'rgba(255, 20, 147, 0.6)', # Deep Pink
+                  'rgba(75, 0, 130, 0.6)']   # Indigo
+
+        # Create radar charts for each recommended song
+        for idx in range(len(recs_df)):
+            selected_recommendation = recs_df.iloc[idx]
+            selected_features = np.array([
+                selected_recommendation['popularity'] / 100.0,  # Scale popularity to [0, 1]
+                selected_recommendation['danceability'],
+                selected_recommendation['energy'],
+                selected_recommendation['acousticness'],
+                selected_recommendation['instrumentalness'],
+                selected_recommendation['liveness'],
+                selected_recommendation['valence']
+            ])
+
+            # Add each recommended song as a layer in the radar chart with different colors
+            fig.add_trace(go.Scatterpolar(
+                r=selected_features,
+                theta=numeric_features,
+                fill='toself',
+                name=str(idx + 1),  # Use index number as the label
+                fillcolor=colors[idx % len(colors)],  # Cycle through the color list
+                line=dict(color=colors[idx % len(colors)], width=2)  # Use the same color for the line
+            ))
+
+        # Update layout of the radar chart
+        fig.update_layout(
+            width=500,
+            height=350,
+            polar=dict(
+                radialaxis=dict(
+                    showticklabels=False,  # Hide radial axis labels
+                    range=[0, 1]  # Ensure this matches your scaled values
+                )
+            ),
+            title=f"Song profiles of recommendations",
+            template="plotly_dark"
+        )
+
+        # Display the radar chart in the Streamlit app
+        st.plotly_chart(fig)
+    else:
+        st.write("No recommendations found.")
 
 # Display the recommendations as a table in the Streamlit app
 st.title('Song Recommendations')
-st.table(recs_df)
+st.table(recs_display_df)
