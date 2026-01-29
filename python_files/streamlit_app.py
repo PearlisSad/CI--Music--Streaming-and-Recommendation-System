@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics.pairwise import cosine_similarity
 from neural_network_functions import process_genres, prepare_numeric_features, build_get_embeddings, recommend_by_song
 
-st.title("Music is the Answer to your problems!")
+st.title("Music is the Answer, to your problems")
 
 # Load logo
 image_path = "../assets/spoofify_logo.png"  # Ensure this path points to your logo image
@@ -161,7 +161,7 @@ with col2:
                     range=[0, 1]  # Ensure this matches your scaled values
                 )
             ),
-            title=f"Song profiles of recommendations",
+            title=f"Recommendation song profiles",
             template="plotly_dark"
         )
 
