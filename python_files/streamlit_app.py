@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics.pairwise import cosine_similarity
 from neural_network_functions import process_genres, prepare_numeric_features, build_get_embeddings, recommend_by_song
 
-st.title("Music is the Answer, to your problems")
+st.title("Music is the Answer. To your problems...")
 
 # Load logo
 image_path = "../assets/spoofify_logo.png"  # Ensure this path points to your logo image
@@ -32,7 +32,7 @@ data = pd.read_csv("../datasets/sam_df_clean.csv")
 genre_df = process_genres(data)
 
 # Create the dropdown in the sidebar
-st.sidebar.title("Find the playlist for your soul")
+st.sidebar.title("Put your Soul in you Playlist")
 # Create a list of song names combined with their artists, sorted alphabetically
 song_names_with_artists = genre_df.apply(lambda row: f"{row['track_name']} | {row['artists']}", axis=1).tolist()
 song_names_with_artists.sort()  # Sort the list alphabetically
@@ -161,7 +161,7 @@ with col2:
                     range=[0, 1]  # Ensure this matches your scaled values
                 )
             ),
-            title=f"Recommendation song profiles",
+            title=f"Recommended song profiles",
             template="plotly_dark"
         )
 
