@@ -1,118 +1,105 @@
-# [Project Title] 
+Project Proposal
+----------------
 
-## Table of Contents
+### Project Overview
 
-1. [Project Overview & Goal](#1-project-overview--goal)
-2. [Understanding the Dataset](#2-understanding-the-dataset)
-3. [Executive Summary](#3-executive-summary)
-4. [Insights Deep Dive](#4-insights-deep-dive)
-5. [Tools & Technologies](#5-tools--technologies)
-6. [How to Run the Project Locally](#6-how-to-run-the-project-locally)
-7. [Team Members & Roles](#7-team-members--roles)
+Music streaming platforms rely heavily on data-driven insights to understand listener preferences, track performance, and relationships between musical attributes. With the growth of large-scale music datasets, there is increasing opportunity to analyse how measurable audio features relate to engagement outcomes such as popularity and musical characteristics (like valence and energy).
 
-<br>
+This project explores a large Spotify track dataset to investigate whether quantifiable audio features and genre classifications can act as indicators of popularity and musical characteristics. In addition, the project explores how these insights can support the foundations of a simple recommendation system.
 
-## 1. Project Overview & Goal
-- Introduction to the project (answering things like what is being analysed and why,)
-- goal or aim and/or objectives (what we plan to achieve and possible how)
-- target audience (who would benefit from this analysis)
+The analysis combines exploratory data analysis, statistical investigation, and introductory machine learning techniques to derive interpretable insights from music streaming data.
 
-<br>
+### Dataset Description
 
-## 2. Understanding the Dataset
-- explain the dataset and it's variables and anything that might not be self-explanatory
-- possibly show a sample of the dataset before and after cleaning and/or transformation
+The dataset used in this project is the [Spotify tracks dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset) sourced from Kaggle. The original dataset contains **114,000 entries,** and **21 columns**. The tracks span across **125 distinct genres**, with each track associated with a range of metadata and audio features.
 
-### Column Specifications
+- **Track_id** - Unique identifier assigned to each track by Spotify.
+- **Track_name** - The name of the song as listed on Spotify.
+- **Artists** \- A string containing the name(s) of the artist(s) associated with the track. Multiple artists may be listed for collaborative tracks.
+- **Album_name** \- The name of the album on which the track appears.
+- **Popularity** \- A numerical score ranging from 0 to 100 indicating the track's popularity on Spotify, based on streaming activity and engagement.
+- **Duration_ms** \- The length of the track measured in milliseconds.
+- **Explicit** \- A binary indicator specifying whether the track contains explicit content.
+- **Danceability** \- A measure of how suitable a track is for dancing, based on tempo, rhythm stability, and beat strength.
+- **Energy -** A measure representing the intensity and activity of a track, with higher values indicating louder and more dynamic music.
+- **Key -** The musical key in which the track is composed, represented as an integer using standard pitch class notation (e.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on). A value of −1 indicates that no key was detected for the track
+- **Loudness -** The overall loudness of a track measured in decibels (dB).
+- **Mode -** The musical modality of the track, where 1 represents major and 0 represents minor.
+- **Speechiness -** A measure of the presence of spoken words within a track.
+- **Acousticness -** A confidence measure of whether a track is acoustic in nature.
+- **Instrumentalness -** A measure predicting whether a track contains no vocals.
+- **Liveness -** A measure indicating the likelihood that the track was recorded during a live performance.
+- **Valence -** A measure describing the musical positiveness conveyed by a track, with higher values representing happier or more upbeat music.
+- **Tempo -** The estimated speed of the track measured in beats per minute (BPM).
+- **Time_signature -** The estimated time signature of the track, representing the number of beats per bar.
+- **Track_genre** \- The primary genre assigned to the track by Spotify.
 
-| Column             | Type              | Description |
-|--------------------|-------------------|-------------|
-| track_id          | String           | Unique Spotify ID for the track (e.g., "spotify:track:2takcwOaAZWiXQijPHIx7B"). |
-| artists           | String           | Names of performing artists, separated by semicolons for multiples. |
-| album_name        | String           | Name of the album containing the track. |
-| track_name        | String           | Title of the track. |
-| popularity        | Integer (0-100)  | Score where higher values indicate greater popularity based on plays and recency. |
-| duration_ms       | Integer          | Track length in milliseconds. |
-| explicit          | Boolean          | Indicates if the track contains explicit lyrics. |
-| danceability      | Float (0.0-1.0)  | Suitability for dancing based on tempo, rhythm stability, beat strength, and regularity (0.0 least, 1.0 most). |
-| energy            | Float (0.0-1.0)  | Perceived intensity and activity (0.0 calm, 1.0 high-energy). |
-| key               | Integer (-1 to 11)| Numeric key (0=C, 1=C♯/D♭); -1 if no key detected. |
-| loudness          | Float            | Overall loudness in decibels (typically -60 to 0). |
-| mode              | Integer (0-1)    | Modality (0=major, 1=minor). |
-| speechiness       | Float (0.0-1.0)  | Presence of spoken words (0.0=music, 1.0=spoken like podcast). |
-| acousticness      | Float (0.0-1.0)  | Confidence that the track is acoustic (0.0=electric, 1.0=acoustic). |
-| instrumentalness  | Float (0.0-1.0)  | Likelihood of no vocals (0.0=vocalic, 1.0=instrumental). |
-| liveness          | Float (0.0-1.0)  | Detection of live audience (higher for live recordings). |
-| valence           | Float (0.0-1.0)  | Musical positiveness (0.0=sad/angry, 1.0=happy/cheerful). |
-| tempo             | Float            | Estimated beats per minute (BPM). |
-| time_signature    | Integer          | An estimated overall time signature (e.g., 4/4 as 4). |
-| track_genre       | String           | Assigned genre label (e.g., from datasets covering 125 genres). |
+### Project Aim and Objectives
 
-<br>
+**Aim**
 
-## 3. Executive Summary
-- state what the reasearch questions were (and hypotheses if applicable)
-- breifly explain the main findings
-- and image with a caption would be good here
+The primary aim of this project is to analyse whether audio features and genre classifications can be used to explain or predict track popularity and musical characteristics, and to explore how these features can support basic music recommendation logic.
 
-<br>
+**Objectives**
 
-## 4. Insights Deep Dive
-- Expand on the previous section, and go deeper into what led to them, if the finding are actually signifact etc
+- To clean and prepare a large-scale music dataset for reliable analysis
+- To explore relationships between genre and engagement metrics such as popularity
+- To examine whether specific audio features act as indicators of other musical attributes (e.g. danceability)
+- To assess correlations between emotional tone (valence), tempo, loudness, and danceability
+- To experiment with regression and machine learning techniques for modelling musical features
+- To lay groundwork for a simple recommendation approach based on audio similarity
 
-<br>
+### Research Questions
 
-## 5. Tools & Technologies
-- self explanatory
-- ***Python***
-- ***Jupyter Notebook***
-- ***Pandas***
-- ***Sci-kit Learn***
-- ***Matplot Lib***
-- ***Seaborn***
-- ***Numpy***
+Based on initial exploration of the dataset, the following research questions guide the project:
 
-<br>
+**Research Questions**
 
-## 6. How to Run the Project Locally
-### Clone the Repository
+- Is musical genre an indicator of track popularity on Spotify?
+  - **Hypothesis:** Tracks belonging to certain genres have significantly higher average popularity scores than others.
+- Do certain audio features (e.g. loudness, energy, tempo) show strong relationships with musical characteristics (e.g. valence and danceability)?
+  - **Hypothesis**: Tempo is positively correlated with danceability.
+- Do collaborative tracks (tracks with multiple artists) differ in popularity or behaviour compared to solo tracks?
+  - **Hypothesis:** Tracks involving multiple artists demonstrate different popularity patterns compared to solo-artist tracks.
 
-```bash
-git clone [https://github.com/PearlisSad/CI--Music--Streaming-and-Recommendation-System]
+**NOTE:**
 
-cd (repository name)
-```
+For the sake of clarity and consistency within this analysis, some of the variables derived from the dataset are grouped into two categories: **audio features** and **musical characteristics**.
 
-### Install Dependencies
+**Audio features** - Variables that describe the technical and signal-level properties of a track. Things that are less subjective. In this project, they are the following variables:
 
-You will need the ```requirements.txt``` file listing pandas, matplotlib, streamlit, etc.
-Open your terminal or a Jupyter cell and run:
+- Energy
+- Loudness
+- Tempo
+- Speechiness
+- Instrumentalness
 
-```bash
-pip install -r requirements.txt
-```
+**Musical characteristics** - Variables that describe the perceptual qualities of a track, particularly in relation to emotional tone and movement. In this project, they are the following variables:
 
-### Streamlit Dashboard (If applicable)
+- Danceability
+- Valence
+- Acousticness
 
-Run the streamlit ```file_name.py``` app and it will open automatically in your browser, displaying the plots.
+### Tools and Technologies
 
-```bash
-streamlit run file_name.py
-```
+The project uses the following tools and technologies:
 
-### Power BI/Tableau Dasboard
+- **Python** for data analysis and modelling
+- **Pandas & NumPy** for data cleaning, manipulation, and feature engineering
+- **Matplotlib & Seaborn** for visualisation (histograms, box plots, bar charts, heatmaps)
+- **Scikit-learn** for regression modelling and evaluation
+- **TensorFlow / Keras** for exploratory neural network modelling and embeddings
+- **Jupyter Notebooks** for reproducible analysis and documentation
+- **Tableau/ Power BI** for dashboarding
+- **Streamlit** for dashboarding and presentation
 
-An interactive Power BI/Tableau Dasboard can be accessed [__here.__](paste_the_link)
+### Expected Deliverables
 
+By the end of the project, the following deliverables are expected:
 
-### Run the Notebook
-
-Open `(notebook_name).ipynb` and run all cells sequentially. The notebook will automatically download the data, run the ETL pipeline, and generate all seaborn/matplotlib visualizations.
-
-<br>
-
-## 7. Team Members & Roles
-- state the members and their respective roles (e.g. data architect, dashboard devolper, data analyst, project manager)
-- can briefly mention/explain how they contributed to the project
-- if there are any shared roles, state that
-- if anyone did more than one thing, state that
+- A fully cleaned dataset
+- Exploratory visualisations illustrating relationships between genres, audio features, and popularity
+- An exploratory machine learning model demonstrating recommendation potential.
+- A concise analytical dashboard showcasing key insights
+- A recommendation tool based on users input.
+- A presentation documenting key findings, limitations, and conclusions
