@@ -165,9 +165,8 @@ def recommend_by_song(df, song_id, k=5, id2index=None, index2id=None, all_embedd
         genre_df = df
         row = genre_df.loc[genre_df['track_id'] == sid].iloc[0]
         results.append({
-            'track_id': sid,
             'track_name': row.get('track_name', None),
             'artists': row.get('artists', None),
-            'score': float(sims[idx])
+            'model score': f"{float(sims[idx]) * 100:.0f}%"  # Format score as percentage
         })
     return results
