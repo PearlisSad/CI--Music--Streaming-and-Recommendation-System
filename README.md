@@ -1,4 +1,5 @@
-# [Project Title]
+# Spotify Music Recommendation System
+A project by Team 3 for Code Institute's Hackathon 2
  
 <br>
 
