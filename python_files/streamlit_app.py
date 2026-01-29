@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import ast
+import plotly.graph_objects as go
 
 # Streamlit Environments
 import streamlit as st
@@ -16,16 +17,31 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics.pairwise import cosine_similarity
 from neural_network_functions import process_genres, prepare_numeric_features, build_get_embeddings, recommend_by_song
 
+# Load logo
+image_path = "../assets/spoofify_logo.png"  # Ensure this path points to your logo image
+st.sidebar.image(image_path, width=200)  # Display the logo in the sidebar
+
+# Create a two-column layout for the first row
+col1, col2  = st.columns (2) # Adjust the widths if desired
+
 data = pd.read_csv("../datasets/sam_df_clean.csv")
 
 # create new df with additional genre column and adding integer columns for genre ids
 genre_df = process_genres(data)
 
 # Create the dropdown in the sidebar
-st.sidebar.title("Select a Song")
-song_names = genre_df['track_name'].tolist()  # convert to list
-selected_song = st.sidebar.selectbox("Choose a song:", song_names)
-st.write(f"You selected: {selected_song}") # Display the selected song name
+st.sidebar.title("Music is The Answer to Your Problems")
+# Create a list of song names combined with their artists, sorted alphabetically
+song_names_with_artists = genre_df.apply(lambda row: f"{row['track_name']} | {row['artists']}", axis=1).tolist()
+song_names_with_artists.sort()  # Sort the list alphabetically
+
+# Dropdown select for song names with artists
+selected_song = st.sidebar.selectbox("Start Typing to Select Your Song:", song_names_with_artists)
+
+# Extract the track name and artist from the selected option
+track_name, artists = selected_song.split(" | ")
+
+st.write(f"You selected: {track_name} by {artists}")  # Display the selected song name
 
 # Save mapping from song Id to row index (needed for recommendations later)
 song_ids = genre_df['track_id'].values
@@ -39,9 +55,58 @@ X_numeric_sound_profile_input, scaler = prepare_numeric_features(genre_df)
 model, all_embeddings, id2embedding = build_get_embeddings(genre_df, X_numeric_sound_profile_input, song_ids)
 
 # Get recommendations
-song_id = genre_df.loc[genre_df['track_name'] == selected_song, 'track_id'].values[0]
+song_id = genre_df.loc[genre_df['track_name'] == track_name, 'track_id'].values[0]
+
 recommendations = recommend_by_song(genre_df,song_id, k=5, id2index=id2index, index2id=index2id, all_embeddings=all_embeddings)
-recs_df = pd.DataFrame(recommendations) # Convert results to DataFrame for better viewing in Streamlit
+recs_df = pd.DataFrame(recommendations)
+recs_df.index = range(1, len(recs_df) + 1)  # Adjusting the index to start at 1
+
+with col1:
+    # Assuming you have genre_df defined with the necessary columns including song_id
+    selected_track = genre_df.loc[genre_df['track_id'] == song_id]
+
+    if not selected_track.empty:
+        numeric_features = ['popularity', 'danceability', 'energy', 
+                            'acousticness', 'instrumentalness', 
+                            'liveness', 'valence']
+
+        # Scale 'popularity' to range [0, 1]
+        popularity_scaled = selected_track['popularity'].values[0] / 100.0  # Assuming original range is [0, 100]
+
+        # Create a feature array replacing the original popularity with the scaled value
+        selected_features = selected_track[numeric_features].values.flatten()
+        selected_features[0] = popularity_scaled  # Replace popularity with scaled value
+
+        # Create radar chart
+        fig = go.Figure()
+        fig.add_trace(go.Scatterpolar(
+            r=selected_features,
+            theta=numeric_features,
+            fill='toself',
+            name=f'Song: {selected_track["track_name"].values[0]} by {selected_track["artists"].values[0]}',
+            fillcolor='rgba(0, 255, 0, 0.6)',  # Neon green fill with transparency
+            line=dict(color='lime', width=2)   # Lime green outline
+        ))
+
+        # Update layout of the radar chart
+        fig.update_layout(
+            width=500,
+            height=350,
+            polar=dict(
+                radialaxis=dict(
+                    showticklabels=False,  # Hide radial axis labels
+                    range=[0, 1]  # This ensures the range of the radar chart
+                )
+            ),
+            title=f"Song profile of {selected_track['track_name'].values[0]}",
+            template="plotly_dark"
+        )
+
+        # Display the radar chart in the Streamlit app
+        st.plotly_chart(fig)
+    else:
+        st.write("No data found for the selected song.")
+
 
 # Display the recommendations as a table in the Streamlit app
 st.title('Song Recommendations')
