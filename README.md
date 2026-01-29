@@ -150,7 +150,7 @@ streamlit run streamlit.py
 
 ### Power BI/Tableau Dasboard
 
-An interactive Power BI/Tableau Dasboard can be accessed [__here.__](paste_the_link)
+An interactive Power BI/Tableau Dasboard can be accessed [__here.__](https://public.tableau.com/app/profile/kanyinsola.fakehinde/viz/DecipheringtheDNAofPopularity/Dashboard1?publish=yes)
 
 
 ### Run the Notebook
