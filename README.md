@@ -1,7 +1,19 @@
-Project Proposal
-----------------
+# [Project Title]
+ 
+<br>
 
-### Project Overview
+## Table of Contents
+1. [Project Overview](#1-project-overview)
+2. [Understanding the Dataset](#2-understanding-the-dataset)
+3. [Aim & Objectives](#3-aim--objectives)
+4. [Research Questions](#4-research-questions)
+5. [Tools & Technologies](#5-tools--technologies)
+6. [How to Run the Project Locally](#6-how-to-run-the-project-locally)
+7. [Team Members & Roles](#7-team-members--roles)
+
+<br>
+
+## 1. Project Overview
 
 Music streaming platforms rely heavily on data-driven insights to understand listener preferences, track performance, and relationships between musical attributes. With the growth of large-scale music datasets, there is increasing opportunity to analyse how measurable audio features relate to engagement outcomes such as popularity and musical characteristics (like valence and energy).
 
@@ -9,32 +21,42 @@ This project explores a large Spotify track dataset to investigate whether quant
 
 The analysis combines exploratory data analysis, statistical investigation, and introductory machine learning techniques to derive interpretable insights from music streaming data.
 
-### Dataset Description
+<br>
+
+## 2. Understanding the Dataset
 
 The dataset used in this project is the [Spotify tracks dataset](https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset) sourced from Kaggle. The original dataset contains **114,000 entries,** and **21 columns**. The tracks span across **125 distinct genres**, with each track associated with a range of metadata and audio features.
 
-- **Track_id** - Unique identifier assigned to each track by Spotify.
-- **Track_name** - The name of the song as listed on Spotify.
-- **Artists** \- A string containing the name(s) of the artist(s) associated with the track. Multiple artists may be listed for collaborative tracks.
-- **Album_name** \- The name of the album on which the track appears.
-- **Popularity** \- A numerical score ranging from 0 to 100 indicating the track's popularity on Spotify, based on streaming activity and engagement.
-- **Duration_ms** \- The length of the track measured in milliseconds.
-- **Explicit** \- A binary indicator specifying whether the track contains explicit content.
-- **Danceability** \- A measure of how suitable a track is for dancing, based on tempo, rhythm stability, and beat strength.
-- **Energy -** A measure representing the intensity and activity of a track, with higher values indicating louder and more dynamic music.
-- **Key -** The musical key in which the track is composed, represented as an integer using standard pitch class notation (e.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on). A value of −1 indicates that no key was detected for the track
-- **Loudness -** The overall loudness of a track measured in decibels (dB).
-- **Mode -** The musical modality of the track, where 1 represents major and 0 represents minor.
-- **Speechiness -** A measure of the presence of spoken words within a track.
-- **Acousticness -** A confidence measure of whether a track is acoustic in nature.
-- **Instrumentalness -** A measure predicting whether a track contains no vocals.
-- **Liveness -** A measure indicating the likelihood that the track was recorded during a live performance.
-- **Valence -** A measure describing the musical positiveness conveyed by a track, with higher values representing happier or more upbeat music.
-- **Tempo -** The estimated speed of the track measured in beats per minute (BPM).
-- **Time_signature -** The estimated time signature of the track, representing the number of beats per bar.
-- **Track_genre** \- The primary genre assigned to the track by Spotify.
+<br>
 
-### Project Aim and Objectives
+**Column Specifications**
+
+| Column             | Type              | Description |
+|--------------------|-------------------|-------------|
+| track_id          | String           | Unique Spotify ID for the track (e.g., "spotify:track:2takcwOaAZWiXQijPHIx7B"). |
+| artists           | String           | Names of performing artists, separated by semicolons for multiples. |
+| album_name        | String           | Name of the album containing the track. |
+| track_name        | String           | Title of the track. |
+| popularity        | Integer (0-100)  | Score where higher values indicate greater popularity based on plays and recency. |
+| duration_ms       | Integer          | Track length in milliseconds. |
+| explicit          | Boolean          | Indicates if the track contains explicit lyrics. |
+| danceability      | Float (0.0-1.0)  | Suitability for dancing based on tempo, rhythm stability, beat strength, and regularity (0.0 least, 1.0 most). |
+| energy            | Float (0.0-1.0)  | Perceived intensity and activity (0.0 calm, 1.0 high-energy). |
+| key               | Integer (-1 to 11)| Numeric key (0=C, 1=C♯/D♭); -1 if no key detected. |
+| loudness          | Float            | Overall loudness in decibels (typically -60 to 0). |
+| mode              | Integer (0-1)    | Modality (0=major, 1=minor). |
+| speechiness       | Float (0.0-1.0)  | Presence of spoken words (0.0=music, 1.0=spoken like podcast). |
+| acousticness      | Float (0.0-1.0)  | Confidence that the track is acoustic (0.0=electric, 1.0=acoustic). |
+| instrumentalness  | Float (0.0-1.0)  | Likelihood of no vocals (0.0=vocalic, 1.0=instrumental). |
+| liveness          | Float (0.0-1.0)  | Detection of live audience (higher for live recordings). |
+| valence           | Float (0.0-1.0)  | Musical positiveness (0.0=sad/angry, 1.0=happy/cheerful). |
+| tempo             | Float            | Estimated beats per minute (BPM). |
+| time_signature    | Integer          | An estimated overall time signature (e.g., 4/4 as 4). |
+| track_genre       | String           | Assigned genre label (e.g., from datasets covering 125 genres). |
+
+<br>
+
+## 3. Aim & Objectives
 
 **Aim**
 
@@ -49,18 +71,21 @@ The primary aim of this project is to analyse whether audio features and genre c
 - To experiment with regression and machine learning techniques for modelling musical features
 - To lay groundwork for a simple recommendation approach based on audio similarity
 
-### Research Questions
+<br>
+
+## 4. Research Questions
 
 Based on initial exploration of the dataset, the following research questions guide the project:
 
-**Research Questions**
+1. Is musical genre an indicator of track popularity on Spotify?
+    
+    **Hypothesis:** Tracks belonging to certain genres have significantly higher average popularity scores than others.
+2. Do certain audio features (e.g. loudness, energy, tempo) show strong relationships with musical characteristics (e.g. valence and danceability)?
 
-- Is musical genre an indicator of track popularity on Spotify?
-  - **Hypothesis:** Tracks belonging to certain genres have significantly higher average popularity scores than others.
-- Do certain audio features (e.g. loudness, energy, tempo) show strong relationships with musical characteristics (e.g. valence and danceability)?
-  - **Hypothesis**: Tempo is positively correlated with danceability.
-- Do collaborative tracks (tracks with multiple artists) differ in popularity or behaviour compared to solo tracks?
-  - **Hypothesis:** Tracks involving multiple artists demonstrate different popularity patterns compared to solo-artist tracks.
+    **Hypothesis**: Tempo is positively correlated with danceability.
+3. Do collaborative tracks (tracks with multiple artists) differ in popularity or behaviour compared to solo tracks?
+
+    **Hypothesis:** Tracks involving multiple artists demonstrate different popularity patterns compared to solo-artist tracks.
 
 **NOTE:**
 
@@ -80,7 +105,9 @@ For the sake of clarity and consistency within this analysis, some of the variab
 - Valence
 - Acousticness
 
-### Tools and Technologies
+<br>
+
+## 5. Tools & Technologies
 
 The project uses the following tools and technologies:
 
@@ -93,13 +120,73 @@ The project uses the following tools and technologies:
 - **Tableau/ Power BI** for dashboarding
 - **Streamlit** for dashboarding and presentation
 
-### Expected Deliverables
+<br>
 
-By the end of the project, the following deliverables are expected:
+## 6. How to Run the Project Locally
+### Clone the Repository
 
-- A fully cleaned dataset
-- Exploratory visualisations illustrating relationships between genres, audio features, and popularity
-- An exploratory machine learning model demonstrating recommendation potential.
-- A concise analytical dashboard showcasing key insights
-- A recommendation tool based on users input.
-- A presentation documenting key findings, limitations, and conclusions
+```bash
+git clone [https://github.com/PearlisSad/CI--Music--Streaming-and-Recommendation-System]
+
+cd CI--Music--Streaming-and-Recommendation-System
+```
+
+### Install Dependencies
+
+You will need the ```requirements.txt``` file listing pandas, matplotlib, streamlit, etc.
+Open your terminal or a Jupyter cell and run:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Streamlit Dashboard
+
+Run the streamlit ```streamlit.py``` app and it will open automatically in your browser, displaying the plots.
+
+```bash
+streamlit run streamlit.py
+```
+
+### Power BI/Tableau Dasboard
+
+An interactive Power BI/Tableau Dasboard can be accessed [__here.__](paste_the_link)
+
+
+### Run the Notebook
+
+All the notebooks can be run sequentially. They will automatically download the data, run the ETL pipeline, and generate all visualizations.
+
+<br>
+
+## 7. Team Members & Roles
+
+*   **Alona – Documentation & Presentation**
+    
+    *   Prepared project documentation and written deliverables
+                
+*   **Rapheal – Data Architecture & Preparation**
+    
+    *   Cleaned, transformed, and structured the raw dataset
+                
+*   **Tish – Data Analysis & Modelling**
+    
+    *   Performed exploratory data analysis using Pandas and NumPy
+        
+    *   Built visualisations and regression/classification models in notebooks
+        
+*   **Sam – Machine Learning & Application Development**
+    
+    *   Developed machine learning models to identify key predictors
+        
+    *   Built a Streamlit recommendation app showcasing the model and outputs
+        
+*   **Kanyin – Dashboarding & Visual Analytics**
+    
+    *   Designed and developed the Tableau dashboard
+                
+*   **Project Management (Shared Role)**
+    
+    *   Coordinated task planning, scheduling, and progress tracking
+        
+    *   Maintained team communication and updates via Discord
