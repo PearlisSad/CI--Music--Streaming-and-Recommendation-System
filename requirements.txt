@@ -1,6 +1,8 @@
 #Data Manipulation
 numpy
 pandas
+scikit-learn
+joblib
 
 #Data Visualisation
 matplotlib
@@ -19,3 +21,5 @@ ipykernel
 jupyter-client
 jupyter-core
 ipywidgets 
+
+joblib
