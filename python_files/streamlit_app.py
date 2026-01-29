@@ -37,12 +37,8 @@ st.sidebar.title("Find the playlist for your soul")
 song_names_with_artists = genre_df.apply(lambda row: f"{row['track_name']} | {row['artists']}", axis=1).tolist()
 song_names_with_artists.sort()  # Sort the list alphabetically
 
-
 # Create a dropdown select box with options for playlist lengths
 playlist_length = st.sidebar.selectbox("Choose your playlist length:", [5, 10, 25, 50, 100])
-
-# Display the selected playlist length
-st.write(f"You selected a playlist length of: {playlist_length}")
 
 # Dropdown select for song names with artists
 selected_song = st.sidebar.selectbox("Start Typing to Select Your Song:", song_names_with_artists)

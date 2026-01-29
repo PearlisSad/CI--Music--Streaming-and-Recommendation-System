@@ -142,7 +142,7 @@ def build_get_embeddings(multi_genre_df2, X_numeric_sound_profile_input, song_id
     id2embedding = {sid: emb for sid, emb in zip(song_ids, all_embeddings)}
     return model, all_embeddings, id2embedding
 
-def recommend_by_song(df, song_id, k=k, id2index=None, index2id=None, all_embeddings=None):
+def recommend_by_song(df, song_id, k=None, id2index=None, index2id=None, all_embeddings=None):
     """
     Return top-k most similar songs to song_id based on cosine similarity over normalized embeddings.
     Returns list of dicts: [{'track_id': ..., 'track_name': ..., 'artists': ..., 'popularity': ..., 
