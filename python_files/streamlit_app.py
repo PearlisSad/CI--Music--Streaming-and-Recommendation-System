@@ -17,7 +17,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics.pairwise import cosine_similarity
 from neural_network_functions import process_genres, prepare_numeric_features, build_get_embeddings, recommend_by_song
 
-st.title("Music is the Answer to your problems!")
+st.title("Music is the Answer. To your problems...")
 
 # Load logo
 image_path = "../assets/spoofify_logo.png"  # Ensure this path points to your logo image
@@ -32,13 +32,16 @@ data = pd.read_csv("../datasets/sam_df_clean.csv")
 genre_df = process_genres(data)
 
 # Create the dropdown in the sidebar
-st.sidebar.title("Find the playlist for your soul")
+st.sidebar.title("Put your Soul in you Playlist")
 # Create a list of song names combined with their artists, sorted alphabetically
 song_names_with_artists = genre_df.apply(lambda row: f"{row['track_name']} | {row['artists']}", axis=1).tolist()
 song_names_with_artists.sort()  # Sort the list alphabetically
 
+# Create a dropdown select box with options for playlist lengths
+playlist_length = st.sidebar.selectbox("Choose your playlist length:", [5, 10, 25, 50, 100])
+
 # Dropdown select for song names with artists
-selected_song = st.sidebar.selectbox("Start Typing to Select Your Song:", song_names_with_artists)
+selected_song = st.sidebar.selectbox("Start typing to select your song:", song_names_with_artists)
 
 # Extract the track name and artist from the selected option
 track_name, artists = selected_song.split(" | ")
@@ -59,7 +62,7 @@ model, all_embeddings, id2embedding = build_get_embeddings(genre_df, X_numeric_s
 # Get recommendations
 song_id = genre_df.loc[genre_df['track_name'] == track_name, 'track_id'].values[0]
 
-recommendations = recommend_by_song(genre_df,song_id, k=5, id2index=id2index, index2id=index2id, all_embeddings=all_embeddings)
+recommendations = recommend_by_song(genre_df,song_id, k=playlist_length, id2index=id2index, index2id=index2id, all_embeddings=all_embeddings)
 recs_df = pd.DataFrame(recommendations)
 recs_df.index = range(1, len(recs_df) + 1)  # Adjusting the index to start at 1
 recs_display_df = recs_df[['track_name', 'artists', 'score']]
@@ -158,7 +161,7 @@ with col2:
                     range=[0, 1]  # Ensure this matches your scaled values
                 )
             ),
-            title=f"Song profiles of recommendations",
+            title=f"Recommended song profiles",
             template="plotly_dark"
         )
 
