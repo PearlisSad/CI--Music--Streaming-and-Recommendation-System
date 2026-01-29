@@ -20,7 +20,7 @@ Music streaming platforms rely heavily on data-driven insights to understand lis
 
 This project explores a large Spotify track dataset to investigate whether quantifiable audio features and genre classifications can act as indicators of popularity and musical characteristics. In addition, the project explores how these insights can support the foundations of a simple recommendation system.
 
-The analysis combines exploratory data analysis, statistical investigation, and introductory machine learning techniques to derive interpretable insights from music streaming data.
+The analysis combines exploratory data analysis, statistical investigation, and neural network techniques to derive interpretable insights from music streaming data.
 
 <br>
 
@@ -191,3 +191,15 @@ All the notebooks can be run sequentially. They will automatically download the 
     *   Coordinated task planning, scheduling, and progress tracking
         
     *   Maintained team communication and updates via Discord
+ 
+## 8. Credits
+
+The below referecnes were used to support tensorflow NNP learning  and code development:
+
+[Friend Spotify Recommender](https://www.kaggle.com/code/phrogmother/friend-spotify-recommender)
+
+[Machine Learning models for song popularity](https://pcontreras97.medium.com/predicting-a-songs-success-using-machine-learning-376ae01b27de)
+
+[Tensor Flow Explanations](https://www.kaggle.com/code/ramakrushnamohapatra/music-generation-using-tensorflow)
+
+
