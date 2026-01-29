@@ -41,7 +41,7 @@ song_names_with_artists.sort()  # Sort the list alphabetically
 playlist_length = st.sidebar.selectbox("Choose your playlist length:", [5, 10, 25, 50, 100])
 
 # Dropdown select for song names with artists
-selected_song = st.sidebar.selectbox("Start Typing to Select Your Song:", song_names_with_artists)
+selected_song = st.sidebar.selectbox("Start typing to select your song:", song_names_with_artists)
 
 # Extract the track name and artist from the selected option
 track_name, artists = selected_song.split(" | ")
